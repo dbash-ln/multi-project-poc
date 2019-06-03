@@ -1,0 +1,4 @@
+rootProject.name = 'multi-project-poc'
+include 'sub-project-1'
+include 'sub-project-2'
+
