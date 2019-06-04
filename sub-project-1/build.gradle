@@ -1,25 +1,6 @@
-plugins {
-    id 'java'
-}
-
 group 'com.qad'
 version '1.0-SNAPSHOT'
 
-sourceCompatibility = 1.8
-
-repositories {
-    mavenCentral()
-}
-
-//test.dependsOn(":sub-project-2:test")
-
 dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.12'
     compile project(':sub-project-2')
-}
-
-test {
-    testLogging {
-        showStandardStreams = true
-    }
 }

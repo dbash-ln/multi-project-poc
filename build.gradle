@@ -1,29 +1,29 @@
 plugins {
     id 'java'
+    // apparent bug: the sonarqube plugin won't apply to sub-projects unless 
+    // it's explicitely set to not apply in this root project import 
+    // (it also won't apply to sub-projects if the `apply` block 
+    // is in the allprojects {} section - it needs to be in the subprojects{} section 
+    id "org.sonarqube" version "2.7.1" apply false
 }
 
 group 'com.qad'
 version '1.0-SNAPSHOT'
 
-sourceCompatibility = 1.8
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'org.sonarqube'
 
-repositories {
-    mavenCentral()
-}
+    sourceCompatibility = 1.8
 
-dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.12'
-}
-
-allprojects {
-    task hello {
-        doLast { task ->
-            println "I'm $task.project.name"
-        }
+    repositories {
+        mavenCentral()
     }
-}
 
-subprojects.each {
+    dependencies {
+        testCompile group: 'junit', name: 'junit', version: '4.12'
+    }
+
     test {
         testLogging {
             showStandardStreams = true
