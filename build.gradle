@@ -1,9 +1,9 @@
 plugins {
     id 'java'
-    // apparent bug: the sonarqube plugin won't apply to sub-projects unless 
-    // it's explicitely set to not apply in this root project import 
-    // (it also won't apply to sub-projects if the `apply` block 
-    // is in the allprojects {} section - it needs to be in the subprojects{} section 
+    // apparent bug: the sonarqube plugin won't apply to sub-projects unless
+    // it's explicitely set to not apply in this root project import
+    // (it also won't apply to sub-projects if the `apply` block
+    // is in the allprojects {} section - it needs to be in the subprojects{} section
     id "org.sonarqube" version "2.7.1" apply false
 }
 
@@ -13,6 +13,7 @@ version '1.0-SNAPSHOT'
 subprojects {
     apply plugin: 'java'
     apply plugin: 'org.sonarqube'
+    apply plugin: 'jacoco'
 
     sourceCompatibility = 1.8
 
@@ -27,6 +28,25 @@ subprojects {
     test {
         testLogging {
             showStandardStreams = true
+        }
+    }
+
+    sonarqube {
+        properties {
+            property 'sonar.projectName', 'Multi Project POC Name'
+            // it's important that the projectKey here match the project key 
+            // in sub-projects with the pattern <root-project-key>:<sub-project-key>
+            property 'sonar.projectKey', 'multi-project-poc-key'
+            property 'sonar.language', 'java'
+            property 'sonar.sources', "${projectDir}/src/main"
+            property 'sonar.tests', "${projectDir}/src/test"
+            property 'sonar.java.binaries', "${buildDir}/classes"
+            property "sonar.java.coveragePlugin", "jacoco"
+            property 'sonar.jacoco.reportPath', "${buildDir}/jacoco.exec"
+            property 'sonar.junit.reportPaths', 'build/test-results'
+            property 'sonar.dynamicAnalysis', 'reuseReports'
+            property 'sonar.exclusions', "**/*Config.java"
+            property 'sonar.exclusions', "**/*LASearchApplication.java"
         }
     }
 }

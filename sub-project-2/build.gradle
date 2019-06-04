@@ -1,3 +1,9 @@
 group 'com.qad'
 version '1.0-SNAPSHOT'
 
+sonarqube {
+    properties {
+        property 'sonar.projectName', 'Sub Project 2 Name'
+        property 'sonar.projectKey', 'multi-project-poc-key:sub-project-2-key'
+    }
+}

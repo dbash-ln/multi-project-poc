@@ -4,3 +4,10 @@ version '1.0-SNAPSHOT'
 dependencies {
     compile project(':sub-project-2')
 }
+
+sonarqube {
+    properties {
+        property 'sonar.projectName', 'Sub Project 1 Name'
+        property 'sonar.projectKey', 'multi-project-poc-key:sub-project-1-key'
+    }
+}
